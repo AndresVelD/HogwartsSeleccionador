@@ -6,10 +6,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 
 class EligeCasa : AppCompatActivity() {
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_elige_casa)
@@ -22,10 +24,14 @@ class EligeCasa : AppCompatActivity() {
 
         // Obtenemos los números de la BBDD de SQLite
         var hogwartsDB: HogwartsDatabaseHelper = HogwartsDatabaseHelper(this)
-        txtNumGriffindor.text = hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_GRIFFINDORF).toString() + " alumnos"
-        txtNumSlytherin.text = hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_SLYTHERIN).toString() + " alumnos"
-        txtNumHufflepuff.text = hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_HUFFLEPLUFF).toString() + " alumnos"
-        txtNumRavenclaw.text = hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_RAVENCLAW).toString() + " alumnos"
+        txtNumGriffindor.text =
+            hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_GRIFFINDORF).toString() + " alumnos"
+        txtNumSlytherin.text =
+            hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_SLYTHERIN).toString() + " alumnos"
+        txtNumHufflepuff.text =
+            hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_HUFFLEPLUFF).toString() + " alumnos"
+        txtNumRavenclaw.text =
+            hogwartsDB.getNumeroAlumnos(CasaHogwarts.CASA_RAVENCLAW).toString() + " alumnos"
 
         // Botón y acción para Griffindor
         val btnGriffindor: Button = findViewById(R.id.btnVerGriffindorf)
@@ -59,5 +65,18 @@ class EligeCasa : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
+        // Botón Atrás hacia el Main
+        val btnAtrasCasa: ImageView= findViewById(R.id.btnVolverCasa)
+        btnAtrasCasa.setOnClickListener {
+            // Nos devuelve a Main
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
     }
 }
+

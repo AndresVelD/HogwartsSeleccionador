@@ -240,13 +240,53 @@ class HogwartsDatabaseHelper(context: Context) :
      * Obtenemos el número de Alumnos según la casa de Hogwarts
      */
     fun getNumeroAlumnos(casa: String): Int {
-        // TODO Crear consulta que devuelva el número de alumnos de una casa
-        return 0
+        val db = this.readableDatabase
+        val selectQuery = "SELECT count(*) AS numAlumnos FROM alumnos WHERE casa = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(casa))
+
+        cursor.use {
+            if (it.moveToFirst()) {
+                return it.getInt(it.getColumnIndexOrThrow("numAlumnos"))
+            }
+        }
+        return -1
     }
 
-    fun listaAlumnos(casa: String): List<AlumnoHogwarts>? {
-        //TODO Crear List<AlumnoHowarts> (ojo quitar el ? del retorno una vez completado)
-        return null
+    fun listaAlumnos(casa: String): List<AlumnoHogwarts> {
+        val db = readableDatabase
+        val res = db.rawQuery("SELECT * FROM alumnos WHERE casa = ?", arrayOf(casa))
+        // Creamos la variable listado
+        var listado = mutableListOf<AlumnoHogwarts>()
+        // Variables para recoger los datos
+        var nombre: String
+        var familiaMaggle: Boolean
+        var apellido: String
+        var habilidad: Int
+        var inteligencia: Int
+        var creatividad: Int
+        var etica: Int
+        var coraje: Int
+        var lealtad: Int
+        // Recorremos la consulta de alumnos que pertenecen a la Casa Buscada
+        while (res.moveToNext()) {
+            // Obtenemos los valores del alumno de la consulta
+            nombre = res.getString(1)
+            familiaMaggle = FuncionesApoyo.integerToBoolean(res.getInt(2))
+            apellido = res.getString(3)
+            habilidad = res.getInt(5)
+            inteligencia = res.getInt(6)
+            creatividad = res.getInt(7)
+            etica = res.getInt(8)
+            coraje = res.getInt(9)
+            lealtad = res.getInt(10)
+            // Creamos el alumno con los datos
+            val alumno = AlumnoHogwarts(
+                nombre, familiaMaggle, casa, apellido, habilidad, inteligencia, creatividad,
+                etica, coraje, lealtad
+            )
+            listado.add(alumno)
+        }
+        return listado
     }
 
     /**

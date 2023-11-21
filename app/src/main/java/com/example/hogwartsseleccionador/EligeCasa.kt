@@ -70,7 +70,7 @@ class EligeCasa : AppCompatActivity() {
         // Botón Atrás hacia el Main
         val btnAtrasCasa: ImageView= findViewById(R.id.btnVolverCasa)
         btnAtrasCasa.setOnClickListener {
-            // Nos devuelve a Main
+            // Nos devuelve al Main
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
